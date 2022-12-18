@@ -1,0 +1,2 @@
+require("nuni")
+print("hello")
