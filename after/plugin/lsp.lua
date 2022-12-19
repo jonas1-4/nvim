@@ -7,7 +7,6 @@ lsp.ensure_installed({
 	'eslint',
 	'sumneko_lua'
 	})
-
+lsp.nvim_workspace()
 lsp.setup()
 
-require('flutter-tools').setup{}
