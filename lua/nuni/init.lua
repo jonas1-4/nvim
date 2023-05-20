@@ -1,2 +1,2 @@
-print("Loading Nuni")
 require("nuni.remap")
+require("nuni.set")
