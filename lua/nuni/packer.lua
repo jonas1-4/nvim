@@ -1,5 +1,3 @@
-vim.cmd [[packadd packer.nvim]]
-
 return require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
 
@@ -12,7 +10,20 @@ return require('packer').startup(function(use)
 
 	use {
 		"nvim-telescope/telescope-file-browser.nvim",
-		requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+		requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" }
+	}
+
+	use {
+		"folke/which-key.nvim",
+		config = function()
+			vim.o.timeout = true
+			vim.o.timeoutlen = 300
+			require("which-key").setup {
+				-- your configuration comes here
+				-- or leave it empty to use the default settings
+				-- refer to the configuration section below
+			}
+		end
 	}
 
 	use {
@@ -67,6 +78,22 @@ return require('packer').startup(function(use)
 			vim.g.matchup_matchparen_offscreen = { method = "popup" }
 		end
 	}
+
+	use {
+		"Dhanus3133/LeetBuddy.nvim",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope.nvim",
+		},
+		-- keys = {
+		-- 	{ "<leader>lq", "<cmd>LBQuestions<cr>", desc = "List Questions" },
+		-- 	{ "<leader>ll", "<cmd>LBQuestion<cr>",  desc = "View Question" },
+		-- 	{ "<leader>lr", "<cmd>LBReset<cr>",     desc = "Reset Code" },
+		-- 	{ "<leader>lt", "<cmd>LBTest<cr>",      desc = "Run Code" },
+		-- 	{ "<leader>ls", "<cmd>LBSubmit<cr>",    desc = "Submit Code" },
+		-- }
+	}
+
 	-- Lua
 	use {
 		"folke/trouble.nvim",
@@ -87,8 +114,4 @@ return require('packer').startup(function(use)
 			require('flutter-tools').setup {}
 		end,
 	}
-
 end)
-
-
-

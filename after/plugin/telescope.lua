@@ -19,7 +19,9 @@ require("telescope").setup(
 	}
 )
 
-function fuzzyFindFiles()
+require'nvim-web-devicons'.setup {}
+
+function FuzzyFindFiles()
   builtin.grep_string({
     path_display = { 'smart' },
     only_sort_text = true,

@@ -1,5 +1,6 @@
 local lsp = require('lsp-zero')
 local cmp = require('cmp')
+require("flutter-tools").setup {}
 
 lsp.preset("recommended")
 
