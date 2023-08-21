@@ -2,17 +2,31 @@
 
 -- LSP config
 local nvim_lsp = require('lspconfig')
+
+nvim_lsp.eslint.setup({
+	on_attach = function(client, bufnr)
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			buffer = bufnr,
+			command = "EslintFixAll",
+		})
+	end,
+})
+
 local on_attach = function(client, bufnr)
 	-- Navigate to the definition of the symbol under the cursor
 	vim.keymap.set('n', '<leader>cd', function() vim.lsp.buf.definition() end,
 		{ noremap = true, silent = true, desc = 'Go To Definition' })
+	vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end,
+		{ noremap = true, silent = true, desc = 'Go To Definition' })
 
 	-- Find references of the symbol under the cursor
-	vim.keymap.set('n', '<leader>cr', function() vim.lsp.buf.references() end,
+	vim.keymap.set('n', '<leader>cD', function() vim.lsp.buf.references() end,
+		{ noremap = true, silent = true, desc = 'Find References' })
+	vim.keymap.set('n', 'gD', function() vim.lsp.buf.references() end,
 		{ noremap = true, silent = true, desc = 'Find References' })
 
 	-- Rename the symbol under the cursor
-	vim.keymap.set('n', '<leader>cn', function() vim.lsp.buf.rename() end,
+	vim.keymap.set('n', '<leader>cr', function() vim.lsp.buf.rename() end,
 		{ noremap = true, silent = true, desc = 'Rename Symbol' })
 
 	-- Show hover information of the symbol under the cursor
@@ -47,9 +61,15 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set('n', '<leader>c[', function() vim.lsp.diagnostic.goto_prev() end,
 		{ noremap = true, silent = true, desc = 'Prev Diagnostic' })
 
-	-- Format the current document
-	vim.keymap.set('n', '<leader>cf', function() vim.lsp.buf.format() end,
-		{ noremap = true, silent = true, desc = 'Format Document' })
+	-- Format the current file
+	vim.keymap.set('n', '<leader>cf', function()
+		if vim.bo.filetype == 'dart' then
+			-- vim.fn['dart#Format']()
+			vim.lsp.buf.format()
+		else
+			vim.lsp.buf.format()
+		end
+	end, { noremap = true, silent = true, desc = 'Format File' })
 end
 
 -- Use a loop to conveniently setup multiple servers
