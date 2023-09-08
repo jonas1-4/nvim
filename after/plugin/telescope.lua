@@ -19,6 +19,9 @@ require("telescope").setup(
 	}
 )
 
+-- require("telescope").find_files({
+--   find_command = {'rg', '--files', '--hidden', '--with-filename', '--no-heading', '--line-number'}
+-- })
 require'nvim-web-devicons'.setup {}
 
 function FuzzyFindFiles()
@@ -39,6 +42,7 @@ vim.keymap.set('n', '<leader><leader>', builtin.find_files, {})
 vim.keymap.set('n', '<C-p>', builtin.git_files, {})
 vim.keymap.set('n', '<leader>sp', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>bb', builtin.buffers, {})
+vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
 
 vim.keymap.set(
 	"n",

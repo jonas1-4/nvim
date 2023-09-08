@@ -1,6 +1,7 @@
 -- ~/.config/nvim/init.lua
 
 -- LSP config
+--
 local nvim_lsp = require('lspconfig')
 
 nvim_lsp.eslint.setup({
@@ -86,17 +87,31 @@ require('nvim-treesitter.configs').setup {
 	},
 }
 
--- -- Autocompletion
--- require('compe').setup {
--- 	enabled = true,
--- 	source = {
--- 		path = true,
--- 		buffer = true,
--- 		nvim_lsp = true,
--- 		nvim_lua = true,
--- 		treesitter = true,
--- 	}
--- }
+nvim_lsp.tsserver.setup{
+    on_attach = function(client)
+        client.resolved_capabilities.document_formatting = false
+    end,
+}
+
+-- Autocompletion
+require('compe').setup {
+	enabled = true,
+	source = {
+		path = true,
+		buffer = true,
+		nvim_lsp = true,
+		nvim_lua = true,
+		treesitter = true,
+	}
+}
+
+-- Use Tab for autocompletion
+vim.api.nvim_set_keymap('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', { noremap = true, expr = true })
+vim.api.nvim_set_keymap('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', { noremap = true, expr = true })
+
+-- Move to the previous error/warning
+vim.keymap.set('n', '<leader>c[', function() vim.lsp.diagnostic.goto_prev() end,
+	{ noremap = true, silent = true, desc = 'Prev Diagnostic' })
 
 -- Autopairs
 require('nvim-autopairs').setup()
